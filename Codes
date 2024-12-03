@@ -1,0 +1,103 @@
+#Binary Search is an efficient algorithm for finding an element in a sorted array. It repeatedly divides the search range in half:
+#
+#1. Compare the target with the middle element.
+#2. If equal, return the index.
+#3. If smaller, search the left half; if larger, search the right half.
+#4. Repeat until found or range is empty.
+
+import tkinter as tk
+from tkinter import messagebox
+
+
+def binarySearch(arrayItem, searchItem):
+
+    low = 0
+    high = len(arrayItem) - 1
+    # arrayItem=[1,2,3,4,5,6,7,8,9]
+    while low <= high:
+        middle = (low + high) // 2
+        if arrayItem[middle] == searchItem:
+            return middle
+        elif arrayItem[middle] < searchItem:
+            low = middle + 1
+        else:
+            high = middle - 1
+    return None
+
+
+
+def on_search():
+    try:
+        # Get inputs
+        array_input = array_entry.get()
+        search_input = int(search_entry.get())
+
+
+
+
+        # Convert the array input string to a list of integers
+        arrayItem = list(map(int, array_input.split(',')))
+
+        # Perform binary search
+        result = binarySearch(arrayItem, search_input)
+
+        # Display the result
+        if result is not None:
+            messagebox.showinfo("Result", f"Item found at index {result}")
+        else:
+            messagebox.showinfo("Result", "Item not found")
+
+    except ValueError:
+        messagebox.showerror("Invalid Input", "Please enter valid numbers")
+
+
+# Create the main window
+root = tk.Tk()
+root.title("Binary Search GUI")
+
+# Set the window size and center it
+window_width = 500
+window_height = 400
+screen_width = root.winfo_screenwidth()
+screen_height = root.winfo_screenheight()
+
+# Calculate position to center the window
+position_top = (screen_height // 2) - (window_height // 2)
+position_left = (screen_width // 2) - (window_width // 2)
+
+root.geometry(f'{window_width}x{window_height}+{position_left}+{position_top}')
+
+# Lock the window size to prevent resizing
+root.resizable(False, False)
+
+# Gradient Background Effect (soft purple gradient)
+root.config(bg="#f3e5f5")
+
+# Create and style the widgets
+array_label = tk.Label(root, text="Enter the array (comma-separated):",
+                       font=("Segoe UI", 14), fg='#6a1b9a', bg="#f3e5f5")
+array_label.pack(pady=15)
+
+array_entry = tk.Entry(root, width=40, font=("Segoe UI", 14), bg='#ffffff', bd=3, relief='flat',
+                       highlightthickness=2, highlightbackground='#6a1b9a', highlightcolor='#4a148c',
+                       insertbackground="black", fg='#4a148c')
+array_entry.pack(pady=15)
+
+search_label = tk.Label(root, text="Enter the item to search:",
+                        font=("Segoe UI", 14), fg='#6a1b9a', bg="#f3e5f5")
+search_label.pack(pady=15)
+
+search_entry = tk.Entry(root, width=40, font=("Segoe UI", 14), bg='#ffffff', bd=3, relief='flat',
+                        highlightthickness=2, highlightbackground='#6a1b9a', highlightcolor='#4a148c',
+                        insertbackground="black", fg='#4a148c')
+search_entry.pack(pady=15)
+
+search_button = tk.Button(root, text="Search", command=on_search,
+                          font=("Segoe UI", 14, "bold"), fg='#ffffff', bg='#8e24aa',
+                          activebackground='#6a1b9a', relief='flat', width=20, height=2,
+                          bd=0, padx=10, pady=5)
+search_button.pack(pady=30)
+
+
+# Run the Tkinter event loop
+root.mainloop()
